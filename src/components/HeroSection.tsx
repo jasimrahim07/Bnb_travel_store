@@ -264,7 +264,7 @@ function MobileHeroMarquee({
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#0A3321] via-[#0A3321]/80 to-transparent" />
 
       <motion.div
-        className="flex w-max items-end gap-3 px-3 pb-1 pt-10"
+        className="flex w-max items-end gap-3 px-3 pb-2 pt-2"
         animate={reduced ? { x: 0 } : { x: ["0%", "-50%"] }}
         transition={
           reduced
@@ -335,7 +335,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
 
   return (
     <section id="hero" className="relative w-full overflow-hidden bg-[#FAF8F5] px-3 pb-6 pt-0 sm:px-4 md:px-8 md:pb-10">
-      <div className="relative flex min-h-[480px] flex-col items-center overflow-hidden rounded-[1.5rem] bg-[#0A3321] px-2 pb-0 pt-10 shadow-2xl sm:min-h-[500px] sm:rounded-[2.5rem] sm:pt-14 md:min-h-[750px] md:pb-10 md:pt-16 lg:h-[800px] lg:rounded-[3.5rem]">
+      <div className="relative flex min-h-[540px] flex-col items-center overflow-hidden rounded-[1.5rem] bg-[#0A3321] px-2 pb-0 pt-10 shadow-2xl sm:min-h-[560px] sm:rounded-[2.5rem] sm:pt-14 md:min-h-[750px] md:pb-10 md:pt-16 lg:h-[800px] lg:rounded-[3.5rem]">
         <motion.p
           initial={{ opacity: reduced ? 1 : 0, x: reduced ? 0 : 60 }}
           animate={visible ? { opacity: 1, x: 0 } : { opacity: reduced ? 1 : 0, x: reduced ? 0 : 60 }}
@@ -345,26 +345,26 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
           Adventure, culture, and comfort all in one journey.
         </motion.p>
 
-        <div className="pointer-events-none z-30 mt-2 w-full self-start px-3 sm:mt-4 sm:px-6 md:mt-8 md:px-12 lg:px-16">
+        <div className="relative z-50 mt-2 w-full shrink-0 self-start px-3 pb-3 sm:mt-4 sm:px-6 sm:pb-4 md:mt-8 md:px-12 md:pb-0 lg:px-16">
           <motion.div
             initial={{ opacity: reduced ? 1 : 0, x: reduced ? 0 : -80 }}
             animate={visible ? { opacity: 1, x: 0 } : { opacity: reduced ? 1 : 0, x: reduced ? 0 : -80 }}
             transition={t({ duration: 0.9, delay: 0.12, ease: slideEase })}
-            className="flex flex-col items-start gap-1 text-left leading-none sm:gap-0"
+            className="relative flex flex-col items-start gap-1 text-left leading-tight sm:gap-0 sm:leading-none"
           >
-            <div className="flex flex-col items-start gap-0 sm:flex-row sm:flex-nowrap sm:items-baseline sm:gap-x-3 md:gap-x-4">
+            <div className="flex flex-col items-start gap-0.5 sm:flex-row sm:flex-nowrap sm:items-baseline sm:gap-x-3 md:gap-x-4">
               <span className="font-sans text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-[4.25rem]">
                 Your Next
               </span>
               <span
-                className="text-3xl leading-none text-[#F2B938] sm:text-4xl md:text-6xl lg:text-[6rem]"
+                className="text-[1.65rem] leading-[1.1] text-[#F2B938] sm:text-4xl sm:leading-none md:text-6xl lg:text-[6rem]"
                 style={{ fontFamily: '"Caveat", "Dancing Script", cursive' }}
               >
                 Unforgettable
               </span>
             </div>
 
-            <div className="mt-1 flex flex-col items-start gap-0 sm:-mt-3 sm:flex-row sm:flex-nowrap sm:items-baseline sm:gap-x-3 md:gap-x-4">
+            <div className="mt-0.5 flex flex-col items-start gap-0.5 sm:-mt-3 sm:flex-row sm:flex-nowrap sm:items-baseline sm:gap-x-3 md:gap-x-4">
               <span
                 aria-hidden
                 className="hidden font-sans text-[4.25rem] font-bold leading-none tracking-tight sm:invisible sm:block"
@@ -372,7 +372,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
                 Your Ne
               </span>
               <span
-                className="text-3xl leading-none text-[#F2B938] sm:text-4xl md:text-6xl lg:text-[6rem]"
+                className="text-[1.65rem] leading-[1.1] text-[#F2B938] sm:text-4xl sm:leading-none md:text-6xl lg:text-[6rem]"
                 style={{ fontFamily: '"Caveat", "Dancing Script", cursive' }}
               >
                 Journey
@@ -384,7 +384,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
           </motion.div>
         </div>
 
-        <div className="pointer-events-none absolute top-[22%] z-20 flex h-[130px] w-full justify-center sm:top-[24%] sm:h-[150px] md:top-[32%] md:h-[300px]">
+        <div className="pointer-events-none absolute top-[38%] z-20 flex h-[110px] w-full justify-center sm:top-[40%] sm:h-[125px] md:top-[32%] md:h-[300px]">
           <div className="relative h-full w-full max-w-[1400px]">
             <svg
               viewBox={`0 0 ${SVG_VIEWBOX.width} ${SVG_VIEWBOX.height}`}
@@ -410,8 +410,8 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
           </div>
         </div>
 
-        {/* Mobile: continuous sliding polaroids (footer-style), pushed down & clipped */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 h-[150px] translate-y-10 overflow-hidden sm:h-[158px] sm:translate-y-12 md:hidden">
+        {/* Mobile: sliding polaroids — raised up, ~10% bottom clip */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-[175px] translate-y-3 overflow-hidden sm:h-[180px] sm:translate-y-4 md:hidden">
           <MobileHeroMarquee visible={visible} reduced={reduced} />
         </div>
 
