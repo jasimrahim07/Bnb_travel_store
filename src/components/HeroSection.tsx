@@ -249,6 +249,82 @@ function PolaroidCard({
   );
 }
 
+function MobileHeroMarquee({
+  visible,
+  reduced,
+}: {
+  visible: boolean;
+  reduced: boolean;
+}) {
+  const track = [...POLAROIDS, ...POLAROIDS];
+
+  return (
+    <>
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#0A3321] via-[#0A3321]/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#0A3321] via-[#0A3321]/80 to-transparent" />
+
+      <motion.div
+        className="flex w-max items-end gap-3 px-3 pb-1 pt-10"
+        animate={reduced ? { x: 0 } : { x: ["0%", "-50%"] }}
+        transition={
+          reduced
+            ? { duration: 0 }
+            : { x: { repeat: Infinity, duration: 22, ease: "linear" } }
+        }
+      >
+        {track.map((item, index) => (
+          <motion.div
+            key={`${item.location}-${index}`}
+            className="relative w-[128px] shrink-0 sm:w-[136px]"
+            initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 24 }}
+            animate={
+              visible
+                ? { opacity: 1, y: reduced ? 0 : [0, -6, 0] }
+                : { opacity: reduced ? 1 : 0, y: reduced ? 0 : 24 }
+            }
+            transition={
+              reduced
+                ? { duration: 0 }
+                : {
+                    opacity: { duration: 0.5, delay: (index % 4) * 0.06 },
+                    y: {
+                      duration: 3.5 + (index % 4) * 0.35,
+                      repeat: Infinity,
+                      repeatType: "mirror",
+                      ease: "easeInOut",
+                      delay: 2.4 + (index % 4) * 0.18,
+                    },
+                  }
+            }
+          >
+            <div
+              className="relative rounded-xl bg-white p-1.5 pb-8 shadow-[0_16px_36px_rgba(0,0,0,0.5)] sm:rounded-2xl sm:p-2 sm:pb-9"
+              style={{ transform: `rotate(${item.rot}deg)` }}
+            >
+              <div className="relative h-[96px] w-full overflow-hidden rounded-lg bg-gray-200 sm:h-[104px]">
+                <Image
+                  src={item.imgUrl}
+                  alt={item.location}
+                  fill
+                  sizes="136px"
+                  className="object-cover"
+                  priority={index < 2}
+                />
+              </div>
+              <div className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-full bg-[#E74C3C] px-2 py-0.5 text-white shadow-lg sm:bottom-2 sm:left-2 sm:px-2.5 sm:py-1">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="h-2.5 w-2.5 sm:h-3 sm:w-3">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                <span className="whitespace-nowrap text-[10px] font-bold tracking-wide sm:text-xs">{item.location}</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </>
+  );
+}
+
 export default function HeroSection({ visible = false }: { visible?: boolean }) {
   const pathRef = useRef<SVGPathElement>(null);
   const { reduced, t } = useMotionPrefs();
@@ -259,7 +335,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
 
   return (
     <section id="hero" className="relative w-full overflow-hidden bg-[#FAF8F5] px-3 pb-6 pt-0 sm:px-4 md:px-8 md:pb-10">
-      <div className="relative flex min-h-[520px] flex-col items-center overflow-hidden rounded-[1.5rem] bg-[#0A3321] px-2 pb-6 pt-10 shadow-2xl sm:min-h-[560px] sm:rounded-[2.5rem] sm:pt-14 md:min-h-[750px] md:pb-10 md:pt-16 lg:h-[800px] lg:rounded-[3.5rem]">
+      <div className="relative flex min-h-[480px] flex-col items-center overflow-hidden rounded-[1.5rem] bg-[#0A3321] px-2 pb-0 pt-10 shadow-2xl sm:min-h-[500px] sm:rounded-[2.5rem] sm:pt-14 md:min-h-[750px] md:pb-10 md:pt-16 lg:h-[800px] lg:rounded-[3.5rem]">
         <motion.p
           initial={{ opacity: reduced ? 1 : 0, x: reduced ? 0 : 60 }}
           animate={visible ? { opacity: 1, x: 0 } : { opacity: reduced ? 1 : 0, x: reduced ? 0 : 60 }}
@@ -308,7 +384,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
           </motion.div>
         </div>
 
-        <div className="pointer-events-none absolute top-[26%] z-10 flex h-[160px] w-full justify-center sm:top-[28%] sm:h-[180px] md:top-[32%] md:h-[300px]">
+        <div className="pointer-events-none absolute top-[22%] z-20 flex h-[130px] w-full justify-center sm:top-[24%] sm:h-[150px] md:top-[32%] md:h-[300px]">
           <div className="relative h-full w-full max-w-[1400px]">
             <svg
               viewBox={`0 0 ${SVG_VIEWBOX.width} ${SVG_VIEWBOX.height}`}
@@ -334,21 +410,9 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
           </div>
         </div>
 
-        {/* Mobile: stable 2x2 grid (no auto horizontal scroll) */}
-        <div className="relative z-40 mt-6 w-full px-2 sm:px-3 md:hidden">
-          <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
-            {POLAROIDS.map((item, index) => (
-              <PolaroidCard
-                key={item.location}
-                item={item}
-                index={index}
-                visible={visible}
-                reduced={reduced}
-                slideEase={slideEase}
-                compact
-              />
-            ))}
-          </div>
+        {/* Mobile: continuous sliding polaroids (footer-style), pushed down & clipped */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-40 h-[150px] translate-y-10 overflow-hidden sm:h-[158px] sm:translate-y-12 md:hidden">
+          <MobileHeroMarquee visible={visible} reduced={reduced} />
         </div>
 
         {/* Desktop: overlapping polaroids */}
