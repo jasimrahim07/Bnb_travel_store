@@ -197,10 +197,10 @@ function PolaroidCard({
         className={`will-change-transform ${compact ? cardWidth : ""}`}
       >
         <motion.div
-          style={{ rotate: compact ? 0 : item.rot }}
-          animate={visible && !reduced && !compact ? { y: [0, -8, 0] } : { y: 0 }}
+          style={{ rotate: item.rot }}
+          animate={visible && !reduced ? { y: [0, compact ? -6 : -8, 0] } : { y: 0 }}
           transition={
-            reduced || compact
+            reduced
               ? { duration: 0 }
               : {
                   y: {
@@ -254,12 +254,12 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
   const { reduced, t } = useMotionPrefs();
   const isMobile = useIsMobile();
   const slideEase = [0.22, 1, 0.36, 1] as const;
-  const lineDuration = reduced || isMobile ? 0 : LINE_DRAW_DURATION;
-  const lineDelay = reduced || isMobile ? 0 : LINE_DRAW_DELAY;
+  const lineDuration = reduced ? 0 : isMobile ? 2 : LINE_DRAW_DURATION;
+  const lineDelay = reduced ? 0 : isMobile ? 0.4 : LINE_DRAW_DELAY;
 
   return (
     <section id="hero" className="relative w-full overflow-hidden bg-[#FAF8F5] px-3 pb-6 pt-0 sm:px-4 md:px-8 md:pb-10">
-      <div className="relative flex min-h-0 flex-col items-center overflow-hidden rounded-[1.5rem] bg-[#0A3321] px-2 pb-6 pt-10 shadow-2xl sm:rounded-[2.5rem] sm:pt-14 md:min-h-[750px] md:pb-10 md:pt-16 lg:h-[800px] lg:rounded-[3.5rem]">
+      <div className="relative flex min-h-[520px] flex-col items-center overflow-hidden rounded-[1.5rem] bg-[#0A3321] px-2 pb-6 pt-10 shadow-2xl sm:min-h-[560px] sm:rounded-[2.5rem] sm:pt-14 md:min-h-[750px] md:pb-10 md:pt-16 lg:h-[800px] lg:rounded-[3.5rem]">
         <motion.p
           initial={{ opacity: reduced ? 1 : 0, x: reduced ? 0 : 60 }}
           animate={visible ? { opacity: 1, x: 0 } : { opacity: reduced ? 1 : 0, x: reduced ? 0 : 60 }}
@@ -308,7 +308,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
           </motion.div>
         </div>
 
-        <div className="pointer-events-none absolute top-[32%] z-10 hidden h-[240px] w-full justify-center md:flex md:h-[300px]">
+        <div className="pointer-events-none absolute top-[26%] z-10 flex h-[160px] w-full justify-center sm:top-[28%] sm:h-[180px] md:top-[32%] md:h-[300px]">
           <div className="relative h-full w-full max-w-[1400px]">
             <svg
               viewBox={`0 0 ${SVG_VIEWBOX.width} ${SVG_VIEWBOX.height}`}
@@ -319,7 +319,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
               <motion.path
                 d={WAVE_PATH}
                 stroke="rgba(255,255,255,0.7)"
-                strokeWidth="3.5"
+                strokeWidth={isMobile ? 2.5 : 3.5}
                 fill="none"
                 strokeDasharray="15 15"
                 strokeLinecap="butt"
@@ -330,7 +330,7 @@ export default function HeroSection({ visible = false }: { visible?: boolean }) 
                 }}
               />
             </svg>
-            <PathIconsLayer pathRef={pathRef} visible={visible} reduced={reduced} staticIcons={isMobile} />
+            <PathIconsLayer pathRef={pathRef} visible={visible} reduced={reduced} staticIcons={false} />
           </div>
         </div>
 

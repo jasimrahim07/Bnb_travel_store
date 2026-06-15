@@ -25,6 +25,21 @@ const SECTION_LINKS = [
   { label: "FAQ", href: "#faq" },
 ];
 
+const menuContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.12 },
+  },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
+};
+
+const menuItemVariants = {
+  hidden: { opacity: 0, x: 24 },
+  visible: { opacity: 1, x: 0, transition: { type: "spring" as const, stiffness: 280, damping: 24 } },
+  exit: { opacity: 0, x: 16 },
+};
+
 export default function Navbar({ visible }: { visible: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -69,6 +84,8 @@ export default function Navbar({ visible }: { visible: boolean }) {
         ? "border-forest/15 bg-white/45"
         : "border-gray-300/80 bg-transparent"
     } hover:border-forest hover:bg-forest hover:text-cream hover:shadow-[0_8px_24px_rgba(26,58,42,0.22)]`;
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
@@ -136,80 +153,129 @@ export default function Navbar({ visible }: { visible: boolean }) {
 
             <button
               type="button"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-label="Open menu"
               aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((o) => !o)}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-forest/15 bg-white/60 text-forest transition-colors hover:bg-forest hover:text-cream focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none lg:hidden"
+              onClick={() => setMenuOpen(true)}
+              className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-forest/15 bg-white/60 text-forest transition-colors hover:bg-forest hover:text-cream focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none lg:hidden ${menuOpen ? "pointer-events-none opacity-0" : ""}`}
             >
-              {menuOpen ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
+              <Menu size={20} strokeWidth={2.5} />
             </button>
           </div>
         </nav>
       </motion.header>
 
+      {/* Premium full-screen mobile canvas */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            key="mobile-menu"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={t({ duration: 0.25 })}
-            className="fixed inset-0 z-[199] bg-forest/40 backdrop-blur-sm lg:hidden"
-            onClick={() => setMenuOpen(false)}
-            aria-hidden
-          />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={t({ type: "spring", stiffness: 320, damping: 32 })}
-            className="fixed right-0 top-0 z-[201] flex h-full w-[min(100%,320px)] flex-col bg-cream px-6 pb-8 pt-24 shadow-2xl lg:hidden"
+            transition={t({ duration: 0.3 })}
+            className="fixed inset-0 z-[250] flex flex-col overflow-hidden bg-[#051c0f] lg:hidden"
           >
-            <p className="mb-3 font-sans-body text-xs font-bold uppercase tracking-[0.16em] text-gold">
-              Pages
-            </p>
-            <div className="mb-6 flex flex-col gap-2">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={linkClass(true)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+            {/* Mesh background */}
+            <div className="pointer-events-none absolute inset-0">
+              <div
+                className="absolute inset-0 opacity-[0.06]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(rgba(201,168,76,0.4) 1px, transparent 0), radial-gradient(rgba(255,255,255,0.08) 1px, transparent 0)",
+                  backgroundSize: "32px 32px",
+                  backgroundPosition: "0 0, 16px 16px",
+                }}
+              />
+              <div className="absolute -right-16 top-0 h-64 w-64 rounded-full bg-gold/10 blur-[80px]" />
+              <div className="absolute -left-16 bottom-20 h-72 w-72 rounded-full bg-[#1abc9c]/10 blur-[90px]" />
             </div>
 
-            <p className="mb-3 font-sans-body text-xs font-bold uppercase tracking-[0.16em] text-gold">
-              Sections
-            </p>
-            <div className="mb-6 flex flex-col gap-2">
-              {SECTION_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={linkClass(true)}
-                >
-                  {link.label}
-                </a>
-              ))}
+            {/* Top bar: logo + close */}
+            <div className="relative z-10 flex items-center justify-between px-5 pb-2 pt-5 sm:px-8">
+              <Link href="/" onClick={closeMenu} className="inline-flex shrink-0">
+                <Image
+                  src="/images/logo/logo.png"
+                  alt="B&B Travel Store"
+                  width={130}
+                  height={44}
+                  className="h-9 w-auto brightness-0 invert"
+                />
+              </Link>
+              <motion.button
+                type="button"
+                aria-label="Close menu"
+                onClick={closeMenu}
+                initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                transition={spring({ type: "spring", stiffness: 400, damping: 22 })}
+                whileTap={{ scale: 0.92 }}
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold shadow-[0_0_24px_rgba(201,168,76,0.2)] backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+              >
+                <X size={22} strokeWidth={2.5} />
+              </motion.button>
             </div>
 
-            <Link
-              href="/contact"
-              onClick={() => setMenuOpen(false)}
-              className="mt-auto inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-gold px-6 py-3 font-sans-body text-sm font-bold text-forest shadow-md focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+            {/* Scrollable nav content */}
+            <motion.div
+              variants={menuContainerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="relative z-10 flex flex-1 flex-col overflow-y-auto px-5 pb-8 pt-4 sm:px-8"
             >
-              {CTAS.whatsapp}
-              <ArrowUpRight size={16} strokeWidth={2.5} />
-            </Link>
+              <motion.p variants={menuItemVariants} className="mb-3 font-sans-body text-[10px] font-bold uppercase tracking-[0.28em] text-gold/80">
+                Navigate
+              </motion.p>
+              <div className="mb-8 flex flex-col gap-2">
+                {NAV_LINKS.map((link) => (
+                  <motion.div key={link.label} variants={menuItemVariants}>
+                    <Link
+                      href={link.href}
+                      onClick={closeMenu}
+                      className="group flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.04] px-5 py-4 font-sans-body text-[15px] font-semibold text-white backdrop-blur-sm transition-colors hover:border-gold/30 hover:bg-gold/10 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                    >
+                      {link.label}
+                      <ArrowUpRight
+                        size={16}
+                        className="text-gold/50 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold"
+                      />
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p variants={menuItemVariants} className="mb-3 font-sans-body text-[10px] font-bold uppercase tracking-[0.28em] text-gold/80">
+                On This Page
+              </motion.p>
+              <div className="mb-8 flex flex-wrap gap-2">
+                {SECTION_LINKS.map((link) => (
+                  <motion.div key={link.href} variants={menuItemVariants}>
+                    <a
+                      href={link.href}
+                      onClick={closeMenu}
+                      className="inline-block rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 font-sans-body text-xs font-medium text-white/75 transition-colors hover:border-gold/35 hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                    >
+                      {link.label}
+                    </a>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div variants={menuItemVariants} className="mt-auto pt-4">
+                <Link href="/contact" onClick={closeMenu}>
+                  <motion.span
+                    whileTap={reduced ? undefined : { scale: 0.97 }}
+                    className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-gold py-3.5 pl-6 pr-3 font-sans-body text-sm font-bold text-[#0A3321] shadow-[0_12px_40px_rgba(201,168,76,0.35)] focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                  >
+                    {CTAS.whatsapp}
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0A3321]">
+                      <ArrowUpRight size={16} className="text-white" strokeWidth={2.5} />
+                    </span>
+                  </motion.span>
+                </Link>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

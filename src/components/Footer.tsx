@@ -16,11 +16,68 @@ const FOOTER_POLAROIDS = [
   { url: "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?q=80&w=400", rot: 5, y: 18, z: 10 },
 ];
 
-const FOOTER_POLAROIDS_MOBILE = [
-  { url: "https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?q=80&w=400", rot: -6 },
-  { url: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=400", rot: 0 },
-  { url: "https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?q=80&w=400", rot: 6 },
-];
+const FOOTER_POLAROIDS_MOBILE = FOOTER_POLAROIDS.map((card) => ({
+  url: card.url,
+  rot: card.rot,
+  y: card.y,
+}));
+
+function MobileFooterMarquee({ reduced }: { reduced: boolean }) {
+  const track = [...FOOTER_POLAROIDS_MOBILE, ...FOOTER_POLAROIDS_MOBILE];
+
+  return (
+    <div className="relative z-10 h-[200px] w-full overflow-hidden md:hidden">
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#FAF8F5] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#FAF8F5] to-transparent" />
+
+      <motion.div
+        className="flex w-max items-end gap-4 px-4 pb-2 pt-6"
+        animate={reduced ? { x: 0 } : { x: ["0%", "-50%"] }}
+        transition={
+          reduced
+            ? { duration: 0 }
+            : { x: { repeat: Infinity, duration: 28, ease: "linear" } }
+        }
+      >
+        {track.map((card, index) => (
+          <motion.div
+            key={`${card.url}-${index}`}
+            className="relative shrink-0"
+            style={{ zIndex: 10 + (index % 7) }}
+            animate={reduced ? { y: 0 } : { y: [card.y * 0.4, card.y * 0.4 - 8, card.y * 0.4] }}
+            transition={
+              reduced
+                ? { duration: 0 }
+                : {
+                    y: {
+                      duration: 3.5 + (index % 4) * 0.3,
+                      repeat: Infinity,
+                      repeatType: "mirror",
+                      ease: "easeInOut",
+                      delay: (index % 7) * 0.25,
+                    },
+                  }
+            }
+          >
+            <div
+              className="relative h-[130px] w-[86px] overflow-hidden rounded-2xl border-[3px] border-white bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)] sm:h-[140px] sm:w-[92px]"
+              style={{ transform: `rotate(${card.rot}deg)` }}
+            >
+              <Image
+                src={card.url}
+                alt={`Destination ${(index % FOOTER_POLAROIDS_MOBILE.length) + 1}`}
+                fill
+                sizes="92px"
+                className="object-cover"
+                draggable={false}
+              />
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
 
 const EXPLORE_LINKS = [
   { label: "Visa Services", href: "/visa-services" },
@@ -52,33 +109,8 @@ export default function Footer() {
 
   return (
     <footer id="footer" aria-label="Footer" className="w-full bg-[#FAF8F5]">
-      {/* Mobile: 3 centered polaroids */}
-      <div className="relative z-10 flex h-[170px] w-full items-end justify-center gap-3 overflow-hidden px-4 pb-0 md:hidden">
-        {FOOTER_POLAROIDS_MOBILE.map((card, index) => (
-          <div
-            key={index}
-            className="relative shrink-0"
-            style={{
-              transform: `translateY(${index === 1 ? -10 : index === 0 ? 6 : 6}px)`,
-              zIndex: index === 1 ? 20 : 10,
-            }}
-          >
-            <div
-              className="relative h-[120px] w-[78px] overflow-hidden rounded-xl border-[3px] border-white bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)]"
-              style={{ transform: `rotate(${card.rot}deg)` }}
-            >
-              <Image
-                src={card.url}
-                alt={`Destination ${index + 1}`}
-                fill
-                sizes="78px"
-                className="object-cover"
-                draggable={false}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Mobile: continuous sliding polaroids */}
+      <MobileFooterMarquee reduced={reduced} />
 
       {/* Desktop: full polaroid strip */}
       <div className="relative z-10 hidden h-[340px] w-full items-end justify-center overflow-hidden pb-0 -space-x-7 md:flex lg:-space-x-8">
