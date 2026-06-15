@@ -4,6 +4,7 @@ import {
   Inter,
   Playfair_Display,
 } from "next/font/google";
+import { SITE } from "@/lib/siteConfig";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -28,8 +29,15 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "TRIPMINT | Your Next Journey Starts Here",
-  description: "Discover handcrafted journeys to the world's most breathtaking destinations.",
+  title: "B&B Travel Store | Visa Consultancy & Travel Booking",
+  description: SITE.tagline,
+  applicationName: SITE.name,
+  openGraph: {
+    title: "B&B Travel Store | Visa Consultancy & Travel Booking",
+    description: SITE.tagline,
+    siteName: SITE.name,
+    type: "website",
+  },
 };
 
 export const viewport = {
