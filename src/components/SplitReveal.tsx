@@ -80,6 +80,7 @@ export default function SplitReveal({ onComplete }: SplitRevealProps) {
         transition: { duration: isMobile ? 0.65 : 0.8, ease: "linear" },
       });
 
+      // Jet stream starts at rear engines
       smokeControls.start({
         height: isMobile ? "180px" : "250px",
         opacity: [0.6, 0],
@@ -137,62 +138,50 @@ export default function SplitReveal({ onComplete }: SplitRevealProps) {
         ))}
       </motion.div>
 
+      {/* 
+        3D BRONZE PRIVATE JET CONTAINER
+        Hardware-accelerated and detailed with high-end dropping shadows.
+      */}
       <motion.div
         animate={planeControls}
         style={{ left: "50%", x: "-50%" }}
-        className="absolute z-50 h-[155px] w-[120px] origin-bottom will-change-transform sm:h-[230px] sm:w-[200px] md:h-[400px] md:w-[320px]"
+        className="absolute z-50 h-[155px] w-[120px] origin-bottom will-change-transform sm:h-[230px] sm:w-[200px] md:h-[400px] md:w-[320px] drop-shadow-[0_25px_35px_rgba(0,0,0,0.6)]"
       >
         {engineStart && (
           <>
+            {/* Glowing flame at Left Rear Engine turbine */}
             <motion.div
               animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
               transition={{ repeat: Infinity, duration: 0.1 }}
-              className="absolute left-[33%] top-[60%] z-0 h-5 w-5 rounded-full bg-orange-500 blur-md sm:h-8 sm:w-8"
+              className="absolute left-[37%] top-[61%] z-0 h-5 w-5 rounded-full bg-orange-500 blur-md sm:h-8 sm:w-8"
             />
+            {/* Glowing flame at Right Rear Engine turbine */}
             <motion.div
               animate={{ scale: [1, 1.3, 1], opacity: [0.8, 1, 0.8] }}
               transition={{ repeat: Infinity, duration: 0.1 }}
-              className="absolute right-[33%] top-[60%] z-0 h-5 w-5 rounded-full bg-orange-500 blur-md sm:h-8 sm:w-8"
+              className="absolute right-[37%] top-[61%] z-0 h-5 w-5 rounded-full bg-orange-500 blur-md sm:h-8 sm:w-8"
             />
+            {/* Jet smoke trail aligned perfectly to the rear turbines */}
             <motion.div
               animate={smokeControls}
               initial={{ height: 0, opacity: 0 }}
               style={{ left: "50%", x: "-50%" }}
-              className="absolute top-[60%] z-0 w-0.5 origin-top bg-gradient-to-b from-white/70 via-white/20 to-transparent sm:w-1.5"
+              className="absolute top-[68%] z-0 w-0.5 origin-top bg-gradient-to-b from-white/70 via-white/20 to-transparent sm:w-1.5"
             />
           </>
         )}
 
-        <svg
-          viewBox="0 0 100 100"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="relative z-10 h-full w-full drop-shadow-[0_16px_24px_rgba(0,0,0,0.55)] sm:drop-shadow-[0_20px_30px_rgba(0,0,0,0.55)]"
-        >
-          <defs>
-            <linearGradient id="fuselage" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#CBD5E1" />
-              <stop offset="45%" stopColor="#FFFFFF" />
-              <stop offset="55%" stopColor="#FFFFFF" />
-              <stop offset="100%" stopColor="#94A3B8" />
-            </linearGradient>
-            <linearGradient id="wings" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#94A3B8" />
-              <stop offset="50%" stopColor="#E2E8F0" />
-              <stop offset="100%" stopColor="#475569" />
-            </linearGradient>
-          </defs>
-          <path d="M50 42 L5 64 L5 70 L50 54 L95 70 L95 64 Z" fill="url(#wings)" stroke="#64748B" strokeWidth="0.5" />
-          <path d="M50 82 L28 92 L28 95 L50 88 L72 95 L72 92 Z" fill="url(#wings)" />
-          <path d="M50 12 C47 12 45 22 45 32 L45 86 C45 91 47 93 50 93 C52 93 55 91 55 86 L55 32 C55 22 53 12 50 12 Z" fill="url(#fuselage)" />
-          <rect x="29" y="55" width="7" height="15" rx="3.5" fill="#475569" stroke="#1E293B" strokeWidth="0.5" />
-          <path d="M29 65 L36 65" stroke="#F1F5F9" strokeWidth="0.5" />
-          <rect x="64" y="55" width="7" height="15" rx="3.5" fill="#475569" stroke="#1E293B" strokeWidth="0.5" />
-          <path d="M64 65 L71 65" stroke="#F1F5F9" strokeWidth="0.5" />
-          <path d="M47.5 22 C48 21.2 52 21.2 52.5 22 C51.5 23 48.5 23 47.5 22 Z" fill="#0F172A" />
-          <circle cx="5" cy="64.5" r="1" fill="#EF4444" />
-          <circle cx="95" cy="64.5" r="1" fill="#22C55E" />
-        </svg>
+        {/* Next.js Optimized High-Res Metallic Private Jet Cutout */}
+        <div className="relative w-full h-full z-10">
+          <Image
+            src="/images/hero/plane.png"
+            alt="Metallic bronze private jet"
+            fill
+            className="object-contain"
+            priority
+            loading="eager"
+          />
+        </div>
       </motion.div>
     </div>
   );
