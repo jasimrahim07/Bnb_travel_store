@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useMotionPrefs } from "@/lib/motionPrefs";
+import { SITE } from "@/lib/siteConfig";
 
 const FOOTER_POLAROIDS = [
   { url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400", rot: -5, y: 18, z: 10 },
@@ -174,9 +175,20 @@ export default function Footer() {
               <h2 className="mb-6 font-sans text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl lg:text-[2.8rem]">
                 Ready to start your journey?
               </h2>
-              <p className="mb-8 max-w-[340px] font-sans text-sm leading-relaxed text-white/60 sm:text-[15px]">
+              <p className="mb-6 max-w-[340px] font-sans text-sm leading-relaxed text-white/60 sm:text-[15px]">
                 Have questions or need help planning your next adventure? Our travel experts are here for you!
               </p>
+              <div className="mb-8 flex flex-col gap-2">
+                {SITE.phones.map((phone) => (
+                  <a
+                    key={phone}
+                    href={`tel:${phone.replace(/\s/g, "")}`}
+                    className="font-sans text-sm font-semibold text-white/80 transition-colors hover:text-[#F2B938] focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none rounded"
+                  >
+                    {phone}
+                  </a>
+                ))}
+              </div>
               <motion.a
                 href="/contact"
                 whileHover={reduced ? undefined : { scale: 1.05 }}

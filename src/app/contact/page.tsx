@@ -14,7 +14,6 @@ function ContactExtras() {
         {[
           { icon: MessagesSquare, label: "Live Chat", value: "Chat with us", href: SITE.tawk.chatUrl, external: true },
           { icon: MessageCircle, label: "WhatsApp", value: CTAS.whatsapp, href: SITE.whatsapp, external: true },
-          { icon: Phone, label: "Phone", value: SITE.phone, href: `tel:${SITE.phone.replace(/\s/g, "")}` },
           { icon: Mail, label: "Support Email", value: SITE.tawk.ticketsEmail, href: `mailto:${SITE.tawk.ticketsEmail}` },
         ].map((item, i) => {
           const Icon = item.icon;
@@ -37,6 +36,27 @@ function ContactExtras() {
             </motion.a>
           );
         })}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="flex flex-col items-center rounded-2xl border border-forest/10 bg-white p-7 text-center"
+        >
+          <Phone size={28} className="mb-3 text-gold" />
+          <p className="font-sans-body text-xs font-bold uppercase tracking-wider text-forest/50">Phone</p>
+          <div className="mt-2 flex flex-col gap-1.5">
+            {SITE.phones.map((phone) => (
+              <a
+                key={phone}
+                href={`tel:${phone.replace(/\s/g, "")}`}
+                className="break-all font-sans-body text-sm font-semibold text-forest transition-colors hover:text-gold"
+              >
+                {phone}
+              </a>
+            ))}
+          </div>
+        </motion.div>
       </div>
       <motion.div
         initial={{ opacity: 0 }}
