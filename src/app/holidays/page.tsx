@@ -1,11 +1,9 @@
 import SiteShell from "@/components/layout/SiteShell";
 import InnerPageContent from "@/components/pages/InnerPageContent";
 import { INNER_PAGES } from "@/data/innerPages";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Holidays | B&B Travel Store",
-  description: "Curated holiday packages to dream destinations worldwide.",
-};
+export const metadata = pageMetadata("holidays");
 
 export default function HolidaysPage() {
   return (

@@ -157,9 +157,9 @@ export default function ValuePropositionSection() {
             </span>
           </div>
 
-          <h2 className="mx-auto max-w-4xl font-serif text-3xl font-bold leading-[1.15] text-white tracking-tight sm:text-4xl md:text-5xl lg:text-[3.5rem]">
+          <h1 className="mx-auto max-w-4xl font-serif text-3xl font-bold leading-[1.15] text-white tracking-tight sm:text-4xl md:text-5xl lg:text-[3.5rem]">
             {SITE.tagline}
-          </h2>
+          </h1>
           
           <p className="mx-auto mt-6 max-w-2xl font-sans text-base leading-relaxed text-white/60">
             High-quality documentation increases your chances of approval. We write letters, build itineraries, and prepare your entire visa file, so you travel with confidence.

@@ -5,6 +5,7 @@ import {
   Playfair_Display,
 } from "next/font/google";
 import { SITE } from "@/lib/siteConfig";
+import { PAGE_SEO, SITE_URL } from "@/lib/seo";
 import TawkToChat from "@/components/TawkToChat";
 import "./globals.css";
 
@@ -30,18 +31,20 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "B&B Travel Store | Visa Consultancy & Travel Booking",
-  description: SITE.tagline,
+  metadataBase: new URL(SITE_URL),
+  title: PAGE_SEO.home.title,
+  description: PAGE_SEO.home.description,
   applicationName: SITE.name,
   icons: {
     icon: "/images/logo/logo.png",
     apple: "/images/logo/logo.png",
   },
   openGraph: {
-    title: "B&B Travel Store | Visa Consultancy & Travel Booking",
-    description: SITE.tagline,
+    title: PAGE_SEO.home.title,
+    description: PAGE_SEO.home.description,
     siteName: SITE.name,
     type: "website",
+    url: SITE_URL,
   },
 };
 

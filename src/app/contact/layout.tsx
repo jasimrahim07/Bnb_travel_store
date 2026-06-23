@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { SITE } from "@/lib/siteConfig";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact | B&B Travel Store",
-  description: `Get in touch with ${SITE.name}. WhatsApp, call, or visit for a free travel consultation.`,
-};
+export const metadata: Metadata = pageMetadata("contact");
 
 export default function ContactLayout({
   children,

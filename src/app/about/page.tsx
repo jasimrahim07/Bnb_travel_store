@@ -1,11 +1,9 @@
 import SiteShell from "@/components/layout/SiteShell";
 import InnerPageContent from "@/components/pages/InnerPageContent";
 import { INNER_PAGES } from "@/data/innerPages";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "About Us | B&B Travel Store",
-  description: "Learn about B&B Travel Store, passionate explorers crafting unforgettable journeys.",
-};
+export const metadata = pageMetadata("about");
 
 export default function AboutPage() {
   return (
