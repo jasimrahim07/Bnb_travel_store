@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://www.bnbtravelstore.com";
+export const GOOGLE_SITE_VERIFICATION = "71d1B0nUJWqXo8gvn4p7SbyIwLYLW3dw7RjWwPr5Kgs";
+export const GA_MEASUREMENT_ID = "G-PGYBC5L2P9";
 
 export const PAGE_SEO = {
   home: {
@@ -57,6 +59,15 @@ export type PageSeoKey = keyof typeof PAGE_SEO;
 
 function canonicalUrl(path: string): string {
   return path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`;
+}
+
+export function homeMetadata(): Metadata {
+  return {
+    ...pageMetadata("home"),
+    verification: {
+      google: GOOGLE_SITE_VERIFICATION,
+    },
+  };
 }
 
 export function pageMetadata(key: PageSeoKey): Metadata {

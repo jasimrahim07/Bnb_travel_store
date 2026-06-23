@@ -1,11 +1,13 @@
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import HomeClient from "@/components/HomeClient";
-import { ORGANIZATION_JSON_LD, pageMetadata } from "@/lib/seo";
+import { homeMetadata, ORGANIZATION_JSON_LD } from "@/lib/seo";
 
-export const metadata = pageMetadata("home");
+export const metadata = homeMetadata();
 
 export default function Home() {
   return (
     <>
+      <GoogleAnalytics />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
