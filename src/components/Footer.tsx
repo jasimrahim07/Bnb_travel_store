@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import { useMotionPrefs } from "@/lib/motionPrefs";
 import { SITE } from "@/lib/siteConfig";
 
@@ -178,7 +178,7 @@ export default function Footer() {
               <p className="mb-6 max-w-[340px] font-sans text-sm leading-relaxed text-white/60 sm:text-[15px]">
                 Have questions or need help planning your next adventure? Our travel experts are here for you!
               </p>
-              <div className="mb-8 flex flex-col gap-2">
+              <div className="mb-8 flex flex-col gap-3">
                 {SITE.phones.map((phone) => (
                   <a
                     key={phone}
@@ -188,6 +188,13 @@ export default function Footer() {
                     {phone}
                   </a>
                 ))}
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="inline-flex items-center gap-2 font-sans text-sm font-semibold text-white/80 transition-colors hover:text-[#F2B938] focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none rounded"
+                >
+                  <Mail size={15} />
+                  {SITE.email}
+                </a>
               </div>
               <motion.a
                 href="/contact"
@@ -228,9 +235,26 @@ export default function Footer() {
                   className="h-12 w-auto object-contain sm:h-14 md:h-16"
                 />
               </Link>
-              <p className="mb-6 font-sans text-sm leading-relaxed text-white/60 sm:text-[15px]">
+              <p className="mb-4 font-sans text-sm leading-relaxed text-white/60 sm:text-[15px]">
                 Travel isn&apos;t just what we do it&apos;s who we are. Founded by passionate explorers.
               </p>
+              <div className="mb-6">
+                <h3 className="mb-2 font-sans text-sm font-bold uppercase tracking-wider text-[#F2B938]">
+                  Locate Us
+                </h3>
+                <p className="font-sans text-sm leading-relaxed text-white/60">
+                  {SITE.address}
+                </p>
+                <a
+                  href={SITE.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1.5 font-sans text-sm font-bold text-[#F2B938] transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none rounded"
+                >
+                  <MapPin size={15} />
+                  Get Directions
+                </a>
+              </div>
               <Link
                 href="/about"
                 className="inline-flex cursor-pointer items-center gap-1.5 rounded font-sans text-sm font-bold text-[#F2B938] transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"

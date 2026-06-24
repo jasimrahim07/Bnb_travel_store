@@ -216,7 +216,7 @@ export const INNER_PAGES: Record<string, InnerPageData> = {
     },
     features: [
       { icon: "message-circle", title: "Live Chat", description: "Click the chat bubble on any page or open our Tawk.to chat for instant support." },
-      { icon: "globe", title: "Support Email", description: "tickets@travel-store-0ozlv0.p.tawk.email — for bookings, visas, and travel queries." },
+      { icon: "globe", title: "Email", description: "info@bnbtravelstore.com — for bookings, visas, and travel queries." },
       { icon: "shield", title: "Free Consultation", description: "No obligation visa assessment and travel quote, completely free." },
       { icon: "users", title: "Expert Team", description: "Speak directly with visa specialists and travel consultants." },
     ],

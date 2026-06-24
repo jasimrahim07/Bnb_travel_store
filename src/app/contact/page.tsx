@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Mail, MessageCircle, MessagesSquare, Phone, Star } from "lucide-react";
+import { ExternalLink, Mail, MapPin, MessageCircle, MessagesSquare, Phone, Star } from "lucide-react";
 import SiteShell from "@/components/layout/SiteShell";
 import InnerPageContent from "@/components/pages/InnerPageContent";
 import { INNER_PAGES } from "@/data/innerPages";
@@ -10,11 +10,11 @@ import { CTAS, SITE } from "@/lib/siteConfig";
 function ContactExtras() {
   return (
     <section className="bg-cream px-8 py-16 md:px-14">
-      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {[
           { icon: MessagesSquare, label: "Live Chat", value: "Chat with us", href: SITE.tawk.chatUrl, external: true },
           { icon: MessageCircle, label: "WhatsApp", value: CTAS.whatsapp, href: SITE.whatsapp, external: true },
-          { icon: Mail, label: "Support Email", value: SITE.tawk.ticketsEmail, href: `mailto:${SITE.tawk.ticketsEmail}` },
+          { icon: Mail, label: "Email", value: SITE.email, href: `mailto:${SITE.email}` },
         ].map((item, i) => {
           const Icon = item.icon;
           return (
@@ -58,6 +58,35 @@ function ContactExtras() {
           </div>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mx-auto mt-8 max-w-4xl rounded-2xl border border-forest/10 bg-white p-8 md:p-10"
+      >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gold/10 text-gold">
+            <MapPin size={28} />
+          </div>
+          <div>
+            <h2 className="font-serif-display text-2xl font-bold text-forest">Locate Us</h2>
+            <p className="mt-3 max-w-2xl font-sans-body text-sm leading-relaxed text-forest/70 md:text-base">
+              {SITE.address}
+            </p>
+            <a
+              href={SITE.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 font-sans-body text-sm font-bold text-gold hover:underline"
+            >
+              Open in Google Maps
+              <ExternalLink size={14} />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
