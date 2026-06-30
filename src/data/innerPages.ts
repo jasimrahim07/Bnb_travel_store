@@ -1,5 +1,12 @@
 import type { FeatureIconName } from "@/types/featureIcons";
 
+export type InnerPageDocumentGuide = {
+  title: string;
+  intro: string;
+  sections: { heading: string; items: string[] }[];
+  importantNote: string;
+};
+
 export type InnerPageData = {
   slug: string;
   eyebrow: string;
@@ -10,6 +17,8 @@ export type InnerPageData = {
   intro: { heading: string; body: string };
   features: { icon: FeatureIconName; title: string; description: string }[];
   steps: { num: string; title: string; description: string }[];
+  stepsHeading?: string;
+  documentGuide?: InnerPageDocumentGuide;
   stats?: { value: string; label: string }[];
   gallery?: { title: string; image: string }[];
   packages?: {
@@ -61,7 +70,52 @@ export const INNER_PAGES: Record<string, InnerPageData> = {
     heroImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1920&auto=format&fit=crop",
     intro: {
       heading: "Skip the embassy queue and apply online",
-      body: "Fast-track e-visa processing for eligible countries. Umrah eVisa, Gulf states, and popular holiday destinations, processed digitally with same-day options where available.",
+      body: "Fast-track e-visa processing for eligible countries. Our team guides you through the complete documentation process and helps you prepare the required details before submission.",
+    },
+    documentGuide: {
+      title: "Documents Required for E-Visa",
+      intro:
+        "The documents required for an e-visa may vary depending on the destination country, visa type, and traveler's profile. Our team guides you through the complete documentation process and helps you prepare the required details before submission.",
+      sections: [
+        {
+          heading: "Basic Documents Usually Required",
+          items: [
+            "Valid passport with minimum 6 months validity",
+            "Clear passport scan copy",
+            "Recent passport-size photograph with white background",
+            "CNIC copy",
+            "Personal contact details",
+            "Travel dates",
+            "Hotel booking or accommodation details",
+            "Return flight reservation or travel itinerary",
+            "Bank statement, if required by the destination country",
+            "Employment letter or business details, if applicable",
+            "Previous travel history, if required",
+            "Family details, if applicable",
+          ],
+        },
+        {
+          heading: "For Business E-Visa",
+          items: [
+            "Business invitation letter",
+            "Company registration documents",
+            "Visiting card or business profile",
+            "Employer letter or business ownership proof",
+            "Purpose of visit details",
+          ],
+        },
+        {
+          heading: "For Family or Visit E-Visa",
+          items: [
+            "Invitation letter from host",
+            "Host passport or ID copy",
+            "Host address and contact details",
+            "Relationship proof, if required",
+          ],
+        },
+      ],
+      importantNote:
+        "E-visa approval depends on the immigration authority of the destination country. Requirements, processing time, and approval policies may change at any time, so we always recommend confirming the latest requirements before applying.",
     },
     features: [
       { icon: "zap", title: "Instant Approval Options", description: "Same-day confirmation for eligible e-visa categories." },
@@ -69,11 +123,13 @@ export const INNER_PAGES: Record<string, InnerPageData> = {
       { icon: "building-2", title: "Gulf & Middle East", description: "UAE, Saudi Arabia, Qatar, and surrounding regions." },
       { icon: "plane", title: "Asia Pacific", description: "Turkey, Malaysia, Thailand, and popular holiday e-visas." },
     ],
+    stepsHeading: "Our E-Visa Process",
     steps: [
-      { num: "01", title: "Send Documents", description: "Passport scan and photo via WhatsApp for quick and secure processing." },
-      { num: "02", title: "We Apply Online", description: "Our team submits your e-visa application on your behalf." },
-      { num: "03", title: "Receive eVisa", description: "Approved visa delivered to your email and WhatsApp." },
-      { num: "04", title: "Travel Ready", description: "Print or digital copy and you're ready to fly." },
+      { num: "01", title: "Consultation", description: "We check your travel destination, purpose of visit, and expected travel dates." },
+      { num: "02", title: "Document Review", description: "Our team reviews your documents and informs you if anything is missing or needs correction." },
+      { num: "03", title: "Application Preparation", description: "We prepare your e-visa application with the correct details and supporting documents." },
+      { num: "04", title: "Submission", description: "Once everything is confirmed, we submit the application through the official process." },
+      { num: "05", title: "Updates & Approval", description: "We keep you updated throughout the process and share the approved e-visa once received." },
     ],
     stats: [
       { value: "48H", label: "Avg. Processing" },

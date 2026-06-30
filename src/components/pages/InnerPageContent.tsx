@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { InnerPageData } from "@/data/innerPages";
 import FoundersVisionSection from "@/components/about/FoundersVisionSection";
+import EvisaDocumentsSection from "@/components/pages/EvisaDocumentsSection";
 import { FeatureIcon } from "@/lib/featureIcons";
 import { LINKS } from "@/lib/links";
 import {
@@ -78,6 +79,8 @@ export default function InnerPageContent({ page }: { page: InnerPageData }) {
 
       {page.slug === "about" && <FoundersVisionSection />}
 
+      {page.documentGuide && <EvisaDocumentsSection guide={page.documentGuide} />}
+
       {/* 3. Features grid */}
       <section className="bg-cream px-8 py-20 md:px-14 md:py-28">
         <motion.div
@@ -133,9 +136,9 @@ export default function InnerPageContent({ page }: { page: InnerPageData }) {
             variants={fadeUp}
             className="mb-14 text-center font-serif-display text-3xl font-bold text-forest md:text-4xl"
           >
-            How It Works
+            {page.stepsHeading ?? "How It Works"}
           </motion.h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${page.steps.length > 4 ? "lg:grid-cols-5" : "lg:grid-cols-4"}`}>
             {page.steps.map((step) => (
               <motion.div
                 key={step.num}
