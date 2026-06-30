@@ -1,5 +1,23 @@
 import type { FeatureIconName } from "@/types/featureIcons";
 
+export type ZiyaratTour = {
+  city: string;
+  title: string;
+  duration: string;
+  intro: string;
+  locations: string[];
+  outro: string;
+};
+
+export type UmrahVisaGuide = {
+  title: string;
+  intro: string;
+  evisaHeading: string;
+  evisaCountries: string[];
+  embassyHeading: string;
+  embassyCountries: string[];
+};
+
 export type InnerPageDocumentGuide = {
   title: string;
   intro: string;
@@ -19,6 +37,10 @@ export type InnerPageData = {
   steps: { num: string; title: string; description: string }[];
   stepsHeading?: string;
   documentGuide?: InnerPageDocumentGuide;
+  ziyaratTours?: ZiyaratTour[];
+  visaGuide?: UmrahVisaGuide;
+  whyChooseUsList?: string[];
+  featuresHeading?: string;
   stats?: { value: string; label: string }[];
   gallery?: { title: string; image: string }[];
   packages?: {
@@ -202,32 +224,128 @@ export const INNER_PAGES: Record<string, InnerPageData> = {
   umrah: {
     slug: "umrah",
     eyebrow: "Religious Travel",
-    title: "Comfortable &",
-    highlight: "Affordable Umrah",
-    subtitle: "5★ & 4★ packages with Umrah eVisa and complete support from visa to transport.",
+    title: "Umrah &",
+    highlight: "Ziyarat Services",
+    subtitle: "Complete Umrah packages with visa assistance, guided Ziyarat tours, and full travel support.",
     heroImage: "https://images.unsplash.com/photo-1553755088-ef1973c7b4a1?q=80&w=1920&auto=format&fit=crop",
     intro: {
-      heading: "Complete support from visa to hotel and transport",
-      body: "Comfortable and affordable Umrah packages. 5-star and 4-star options, customized economy packages, and Umrah eVisa processing, all handled by our dedicated team.",
+      heading: "Complete Umrah Travel Experience",
+      body: "We don't just help you obtain your visa—we make sure your entire Umrah journey is comfortable, organized, and spiritually fulfilling. From visa assistance to transportation and guided Ziyarat tours in Makkah and Madinah, our experienced team takes care of every detail.",
     },
+    ziyaratTours: [
+      {
+        city: "Makkah",
+        title: "Makkah Ziyarat Tour",
+        duration: "Approximately 2 Hours 30 Minutes",
+        intro: "Our guided Makkah Ziyarat includes visits to some of the most significant Islamic landmarks:",
+        locations: [
+          "Cave of Thawr (Ghar-e-Thawr)",
+          "Cave of Hira (Jabal Al-Noor)",
+          "Plain of Arafat",
+          "Masjid Namirah",
+          "Muzdalifah",
+          "Canal of Zubaidah",
+          "Jannat Al-Mu'alla Cemetery",
+          "Masjid Al-Jinn",
+        ],
+        outro:
+          "Our experienced guides provide historical and religious context at each location, making your visit both meaningful and memorable.",
+      },
+      {
+        city: "Madinah",
+        title: "Madinah Ziyarat Tour",
+        duration: "Approximately 2 Hours",
+        intro: "Discover the blessed landmarks of Madinah through our guided Ziyarat service. Included locations:",
+        locations: [
+          "Jabal Uhud",
+          "Masjid Qiblatain",
+          "Seven Mosques (Sab'a Masajid)",
+          "Masjid Quba",
+          "Masjid Al-Jumu'ah",
+        ],
+        outro:
+          "Our guides share the significance and history of each site, allowing pilgrims to connect more deeply with the heritage of Islam.",
+      },
+    ],
+    visaGuide: {
+      title: "Visa Services",
+      intro:
+        "We provide professional visa assistance for tourism, business, family visits, and religious travel.",
+      evisaHeading: "E-Visa Services",
+      evisaCountries: [
+        "Azerbaijan",
+        "Malaysia",
+        "Indonesia",
+        "Sri Lanka",
+        "United Arab Emirates (UAE)",
+        "Bahrain",
+        "Kenya",
+        "Thailand",
+        "Singapore",
+        "Pakistan",
+        "United Kingdom (UK)",
+        "Australia",
+        "Ethiopia",
+        "Cambodia",
+      ],
+      embassyHeading: "Embassy & Consulate Visa Services",
+      embassyCountries: [
+        "United States (USA)",
+        "United Kingdom (UK)",
+        "Canada",
+        "Australia",
+        "Belgium",
+        "France",
+        "Germany",
+        "Italy",
+        "Japan",
+        "Malaysia",
+        "Netherlands",
+        "Portugal",
+        "South Africa",
+        "South Korea",
+        "Spain",
+        "Sweden",
+        "Switzerland",
+        "Thailand",
+        "Turkey",
+      ],
+    },
+    whyChooseUsList: [
+      "Complete Umrah travel planning",
+      "Professional visa assistance",
+      "Organized Makkah & Madinah Ziyarat tours",
+      "Flight and hotel booking support",
+      "Airport transfers",
+      "Dedicated customer support before, during, and after your journey",
+      "Transparent process with personalized assistance",
+    ],
+    featuresHeading: "Why Choose Us?",
     features: [
       { icon: "hotel", title: "5★ & 4★ Umrah Packages", description: "Premium hotels near Haram with walking distance options." },
       { icon: "sparkles", title: "Customized Economy", description: "Budget-friendly packages without compromising on support." },
       { icon: "stamp", title: "Umrah eVisa Processing", description: "Complete visa handling included in every package." },
       { icon: "car", title: "Ground Transport", description: "Airport transfers, ziyarat tours, and chauffeur services." },
     ],
+    stepsHeading: "Our Umrah Process",
     steps: [
-      { num: "01", title: "Choose Package", description: "Silver Economy, Premium Gold, or VVIP Deluxe." },
-      { num: "02", title: "Visa & Documents", description: "Passport, photos, and Umrah eVisa. We handle everything." },
-      { num: "03", title: "Travel & Stay", description: "Flights, hotel check-in, and ground transport arranged." },
-      { num: "04", title: "Blessed Return", description: "Safe journey home with memories for a lifetime." },
+      { num: "01", title: "Consultation", description: "Our travel consultants understand your travel dates, package preference, and accommodation requirements to recommend the most suitable Umrah package." },
+      { num: "02", title: "Documentation", description: "We assist you with the required documents and guide you through the complete Umrah visa process." },
+      { num: "03", title: "Flight & Hotel Booking", description: "Once your visa is approved, we arrange your flights, hotel reservations, and travel itinerary according to your selected package." },
+      { num: "04", title: "Arrival Assistance", description: "Upon arrival, our team assists with airport pickup and comfortable transportation to your hotel." },
+      { num: "05", title: "Guided Ziyarat Tours", description: "Experience the historical and religious landmarks of Makkah and Madinah with organized guided tours." },
+      { num: "06", title: "Ongoing Support", description: "Our support team remains available throughout your journey to assist with transportation, scheduling, and any travel-related concerns." },
     ],
     packages: [
       { name: "Silver Economy", features: ["14 Days Package", "3-Star Hotels (Bus Service)", "Umrah eVisa & Insurance"] },
       { name: "Premium Gold", features: ["4-Star Hotels (Walking Distance)", "Half-Board Breakfast", "VIP Ground Transport"], featured: true, badge: "Most Popular" },
       { name: "VVIP Deluxe", features: ["5-Star Clock Tower Hotels", "Full Board Buffet", "Business Class Option"] },
     ],
-    cta: { title: "Begin your Umrah journey", body: "WhatsApp us for dates, group availability, and package details.", button: "WhatsApp Us" },
+    cta: {
+      title: "Book Your Umrah Journey Today",
+      body: "Let us handle the travel arrangements while you focus on your spiritual journey. Contact our team today to find the right Umrah package and begin your journey with confidence.",
+      button: "WhatsApp Us",
+    },
   },
   about: {
     slug: "about",

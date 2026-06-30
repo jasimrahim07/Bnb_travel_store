@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { InnerPageData } from "@/data/innerPages";
 import FoundersVisionSection from "@/components/about/FoundersVisionSection";
 import EvisaDocumentsSection from "@/components/pages/EvisaDocumentsSection";
+import UmrahServicesSection from "@/components/pages/UmrahServicesSection";
 import { FeatureIcon } from "@/lib/featureIcons";
 import { LINKS } from "@/lib/links";
 import {
@@ -100,8 +101,24 @@ export default function InnerPageContent({ page }: { page: InnerPageData }) {
             variants={fadeUp}
             className="mb-14 text-center font-serif-display text-3xl font-bold text-forest md:text-4xl"
           >
-            Why Choose Us
+            {page.featuresHeading ?? "Why Choose Us"}
           </motion.h2>
+          {page.whyChooseUsList ? (
+            <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2">
+              {page.whyChooseUsList.map((item) => (
+                <motion.div
+                  key={item}
+                  variants={fadeUp}
+                  className="flex gap-3 rounded-2xl border border-forest/10 bg-white px-5 py-4"
+                >
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-gold" />
+                  <p className="font-sans-body text-sm leading-relaxed text-forest/70 md:text-base">
+                    {item}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {page.features.map((feature) => (
                 <motion.article
@@ -120,6 +137,7 @@ export default function InnerPageContent({ page }: { page: InnerPageData }) {
                 </motion.article>
             ))}
           </div>
+          )}
         </motion.div>
       </section>
 
@@ -138,7 +156,15 @@ export default function InnerPageContent({ page }: { page: InnerPageData }) {
           >
             {page.stepsHeading ?? "How It Works"}
           </motion.h2>
-          <div className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${page.steps.length > 4 ? "lg:grid-cols-5" : "lg:grid-cols-4"}`}>
+          <div
+            className={`grid grid-cols-1 gap-6 md:grid-cols-2 ${
+              page.steps.length >= 6
+                ? "lg:grid-cols-3"
+                : page.steps.length > 4
+                  ? "lg:grid-cols-5"
+                  : "lg:grid-cols-4"
+            }`}
+          >
             {page.steps.map((step) => (
               <motion.div
                 key={step.num}
@@ -288,6 +314,10 @@ export default function InnerPageContent({ page }: { page: InnerPageData }) {
             </motion.div>
           </section>
         )
+      )}
+
+      {page.ziyaratTours && page.visaGuide && (
+        <UmrahServicesSection ziyaratTours={page.ziyaratTours} visaGuide={page.visaGuide} />
       )}
 
       {/* CTA */}
